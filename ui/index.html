@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Teacher Agent - Adaptive Difficulty</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="showSection('home')">
+                <div class="logo-icon-wrapper">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <span class="logo-text">AI Teacher Agent</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#topics" class="nav-link">Topics</a></li>
+                <li><a href="#quiz" class="nav-link">Quiz</a></li>
+                <li><a href="#performance" class="nav-link">Performance</a></li>
+                <li><a href="#study-path" class="nav-link">Study Path</a></li>
+                <li><a href="#youtube-rag" class="nav-link">YouTube RAG</a></li>
+                <li><a href="#feedback" class="nav-link">Feedback</a></li>
+                <li class="auth-menu-item">
+                    <a href="#auth" class="nav-link" id="authLink">Sign In</a>
+                    <div id="userMenu" class="user-menu hidden">
+                        <span class="user-name" id="userNameDisplay" onclick="toggleUserDropdown()"></span>
+                        <div id="userDropdown" class="user-dropdown hidden">
+                            <a href="#" class="dropdown-item" onclick="signOut(); return false;">Sign Out</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">AI Teacher Agent</span>
+                    <br>with Adaptive Difficulty
+                </h1>
+                <p class="hero-subtitle">A self-adapting tutor that personalizes your learning experience</p>
+                <button class="cta-button" onclick="showSection('topics')">
+                    <span>Start Learning</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop" alt="Students Learning" class="hero-image">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="study-animations">
+                    <div class="floating-book book-1">📖</div>
+                    <div class="floating-book book-2">📚</div>
+                    <div class="floating-book book-3">📝</div>
+                    <div class="floating-book book-4">✏️</div>
+                    <div class="floating-book book-5">📊</div>
+                    <div class="floating-book book-6">🎓</div>
+                </div>
+                <div class="floating-card card-1">
+                    <div class="card-icon">📚</div>
+                    <div class="card-text">Learn Topics</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">📝</div>
+                    <div class="card-text">Take Quizzes</div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">📊</div>
+                    <div class="card-text">Track Progress</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-feature="explanation">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&h=200&fit=crop" alt="Topic Explanations" class="feature-image">
+                <div class="feature-icon">📖</div>
+                <h3>Topic Explanations</h3>
+                <p>Retrieve comprehensive explanations on any topic with AI-powered content</p>
+            </div>
+            <div class="feature-card" data-feature="quiz">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop" alt="Quiz Generation" class="feature-image">
+                <div class="feature-icon">📝</div>
+                <h3>Quiz Generation</h3>
+                <p>AI-generated quizzes tailored to your current difficulty level</p>
+            </div>
+            <div class="feature-card" data-feature="evaluation">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=300&h=200&fit=crop" alt="Answer Evaluation" class="feature-image">
+                <div class="feature-icon">✅</div>
+                <h3>Answer Evaluation</h3>
+                <p>Intelligent evaluation of your answers with detailed feedback</p>
+            </div>
+            <div class="feature-card" data-feature="tracking">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop" alt="Performance Tracking" class="feature-image">
+                <div class="feature-icon">💾</div>
+                <h3>Performance Tracking</h3>
+                <p>Track your progress in SQLite database with detailed analytics</p>
+            </div>
+            <div class="feature-card" data-feature="difficulty">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=300&h=200&fit=crop" alt="Adaptive Difficulty" class="feature-image">
+                <div class="feature-icon">🎯</div>
+                <h3>Adaptive Difficulty</h3>
+                <p>Automatic difficulty adjustment based on your performance</p>
+            </div>
+            <div class="feature-card" data-feature="path">
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=200&fit=crop" alt="Study Paths" class="feature-image">
+                <div class="feature-icon">🗺️</div>
+                <h3>Study Paths</h3>
+                <p>Personalized study paths generated for optimal learning</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Topics Section -->
+    <section id="topics" class="section">
+        <div class="topics-container">
+            <div class="section-hero-image">
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&h=400&fit=crop" alt="Learning Topics" class="section-banner-image">
+                <div class="section-image-overlay">
+                    <h3>Topics & Learning</h3>
+                    <p>Explore any topic of your choice or select from predefined topics</p>
+                </div>
+            </div>
+            <div class="topic-selector">
+                <div class="topic-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="topicMode" value="custom" checked onchange="toggleTopicMode()">
+                            <span>Enter Custom Topic</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="topicMode" value="predefined" onchange="toggleTopicMode()">
+                            <span>Select from Predefined</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="customTopicInput" class="form-group">
+                    <label for="customTopic">Enter Your Topic</label>
+                    <input type="text" id="customTopic" class="modern-input" placeholder="e.g., Quantum Computing, Blockchain, etc.">
+                </div>
+                <div id="predefinedTopicSelect" class="form-group hidden">
+                    <label for="topicSelect">Choose a Topic</label>
+                    <select id="topicSelect" class="modern-select">
+                        <option value="">-- Select Topic --</option>
+                        <option value="1">Python Basics</option>
+                        <option value="2">Machine Learning</option>
+                        <option value="3">Data Structures</option>
+                        <option value="4">Algorithms</option>
+                        <option value="5">Neural Networks</option>
+                        <option value="6">Natural Language Processing</option>
+                    </select>
+                </div>
+                <button class="action-button" onclick="loadTopic()">
+                    <span>Load Explanation</span>
+                </button>
+            </div>
+            <div id="topicContent" class="topic-content hidden">
+                <div class="content-card">
+                    <h3 id="topicTitle" class="content-title"></h3>
+                    <div id="topicExplanation" class="content-text"></div>
+                    <div id="topicConcepts" class="concepts-list"></div>
+                    <div id="topicResources" class="topic-resources hidden">
+                        <h4 class="resources-title">📚 Learning Resources</h4>
+                        <div class="resources-section">
+                            <h5>🎥 YouTube Videos</h5>
+                            <div id="youtubeLinks" class="resource-links"></div>
+                        </div>
+                        <div class="resources-section">
+                            <h5>🌐 Useful Websites</h5>
+                            <div id="websiteReferences" class="resource-links"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="section">
+        <div class="quiz-container">
+            <div class="quiz-hero-image">
+                <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1200&h=400&fit=crop" alt="Quiz and Assessment" class="quiz-banner-image">
+                <div class="quiz-image-overlay">
+                    <h3>Quiz Interface</h3>
+                    <p>Test your knowledge with AI-generated quizzes</p>
+                </div>
+            </div>
+            <div class="quiz-setup">
+                <div class="form-group">
+                    <label>Choose Quiz Source</label>
+                    <div class="quiz-source-tabs">
+                        <button class="source-tab active" onclick="switchQuizSource('topic')" id="topicTab">Enter Topic</button>
+                        <button class="source-tab" onclick="switchQuizSource('pdf')" id="pdfTab">Upload PDF</button>
+                    </div>
+                </div>
+                <div id="topicSource" class="quiz-source-content">
+                    <div class="form-group">
+                        <label for="quizTopicInput">Enter AI Topic (or select from predefined AI topics)</label>
+                        <div class="input-with-select">
+                            <input type="text" id="quizTopicInput" class="modern-input" placeholder="Enter AI topic (e.g., Machine Learning, Deep Learning, NLP)...">
+                            <select id="quizTopicSelect" class="modern-select" onchange="fillTopicFromSelect()">
+                                <option value="">-- Or Select AI Topic --</option>
+                                <option value="1">Machine Learning</option>
+                                <option value="2">Deep Learning</option>
+                                <option value="3">Neural Networks</option>
+                                <option value="4">Natural Language Processing</option>
+                                <option value="5">Computer Vision</option>
+                                <option value="6">Reinforcement Learning</option>
+                                <option value="7">Convolutional Neural Networks</option>
+                                <option value="8">Transformers</option>
+                                <option value="9">Generative AI</option>
+                                <option value="10">Supervised Learning</option>
+                                <option value="11">Unsupervised Learning</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="pdfSource" class="quiz-source-content hidden">
+                    <div class="form-group">
+                        <label for="pdfUpload">Upload PDF Document</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="pdfUpload" accept=".pdf" class="file-input" onchange="handlePDFUpload(event)">
+                            <label for="pdfUpload" class="file-upload-label">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                <span id="pdfFileName">Choose PDF file...</span>
+                            </label>
+                        </div>
+                        <div id="pdfUploadStatus" class="upload-status hidden"></div>
+                    </div>
+                </div>
+                <div class="quiz-config-grid">
+                    <div class="form-group">
+                        <label for="difficultySelect">Difficulty Level</label>
+                        <select id="difficultySelect" class="modern-select">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="numQuestions">Number of Questions Needed</label>
+                        <input type="number" id="numQuestions" class="modern-input" min="1" max="50" value="10" placeholder="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalMarks">Total Marks</label>
+                        <input type="number" id="totalMarks" class="modern-input" min="1" value="100" placeholder="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="marksPerQuestion">Marks per Question</label>
+                        <input type="number" id="marksPerQuestion" class="modern-input" min="1" value="10" placeholder="10">
+                    </div>
+                </div>
+                <button class="action-button primary" onclick="generateQuiz()">
+                    <span>Generate Quiz</span>
+                </button>
+            </div>
+            <div id="questionSelection" class="question-selection hidden">
+                <div class="selection-header">
+                    <h3>Select Questions for Your Quiz</h3>
+                    <p>We generated <span id="totalGeneratedQuestions">0</span> questions. Select <span id="requiredQuestions">0</span> questions for your quiz.</p>
+                    <div class="selection-progress">
+                        <span>Selected: <strong id="selectedCount">0</strong> / <strong id="requiredCount">0</strong></span>
+                    </div>
+                </div>
+                <div id="questionPool" class="question-pool"></div>
+                <button class="action-button primary" onclick="createQuizFromSelection()" id="createQuizBtn" disabled>
+                    <span>Create Quiz with Selected Questions</span>
+                </button>
+            </div>
+            <div id="quizContent" class="quiz-content hidden">
+                <div class="quiz-header">
+                    <div class="quiz-title-section">
+                        <h3 id="quizTitle"></h3>
+                        <div class="quiz-meta">
+                            <span id="quizDifficulty" class="difficulty-badge"></span>
+                            <span id="questionCount" class="question-count"></span>
+                            <span id="quizMarks" class="marks-badge"></span>
+                        </div>
+                    </div>
+                    <div class="quiz-actions">
+                        <button class="action-button secondary print-quiz-btn" onclick="printQuiz()" title="Print Quiz">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+                                <path d="M6 14h12v8H6z"/>
+                            </svg>
+                            <span>Print</span>
+                        </button>
+                        <button class="action-button secondary download-quiz-btn" onclick="downloadQuizPDF()" title="Download as PDF">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span>Download PDF</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="quizQuestions" class="questions-container"></div>
+                <button class="action-button primary submit-quiz" onclick="submitQuiz()" style="display: none;">
+                    <span>Submit Quiz</span>
+                </button>
+            </div>
+            <div id="quizResults" class="quiz-results hidden">
+                <div class="results-card">
+                    <div class="results-icon">🎉</div>
+                    <h3>Quiz Completed!</h3>
+                    <div class="score-display">
+                        <span class="score-label">Your Score</span>
+                        <span id="finalScore" class="score-value">0%</span>
+                    </div>
+                    <div id="resultsFeedback" class="results-feedback"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section">
+        <div class="performance-container">
+            <div class="section-hero-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=400&fit=crop" alt="Performance Analytics" class="section-banner-image">
+                <div class="section-image-overlay">
+                    <h3>Performance Dashboard</h3>
+                    <p>Track your learning progress and achievements</p>
+                </div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-value" id="totalQuizzes">0</div>
+                    <div class="metric-label">Total Quizzes</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">✅</div>
+                    <div class="metric-value" id="averageScore">0%</div>
+                    <div class="metric-label">Average Score</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🎯</div>
+                    <div class="metric-value" id="correctAnswers">0</div>
+                    <div class="metric-label">Correct Answers</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-value" id="difficultyLevel">Beginner</div>
+                    <div class="metric-label">Difficulty Level</div>
+                </div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Performance Trend</h3>
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Difficulty Progression</h3>
+                    <div id="difficultyChart" class="difficulty-chart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Study Path Section -->
+    <section id="study-path" class="section">
+        <div class="study-path-container">
+            <div class="section-hero-image">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=400&fit=crop" alt="Study Path" class="section-banner-image">
+                <div class="section-image-overlay">
+                    <h3>Learning Roadmap</h3>
+                    <p>Your detailed learning journey with milestones and objectives</p>
+                </div>
+            </div>
+            <div class="path-setup">
+                <div class="path-difficulty-selector">
+                    <label class="form-label">Select Difficulty Level:</label>
+                    <div class="difficulty-options">
+                        <label class="difficulty-option">
+                            <input type="radio" name="pathDifficulty" value="beginner" checked>
+                            <span>Beginner</span>
+                        </label>
+                        <label class="difficulty-option">
+                            <input type="radio" name="pathDifficulty" value="intermediate">
+                            <span>Intermediate</span>
+                        </label>
+                        <label class="difficulty-option">
+                            <input type="radio" name="pathDifficulty" value="advanced">
+                            <span>Advanced</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="path-topic-options">
+                    <div class="form-group path-topic-group">
+                        <label>
+                            <input type="radio" name="pathTopicMode" value="custom" checked onchange="togglePathTopicMode()">
+                            <span>Enter Custom Topic</span>
+                        </label>
+                    </div>
+                    <div class="form-group path-topic-group">
+                        <label>
+                            <input type="radio" name="pathTopicMode" value="predefined" onchange="togglePathTopicMode()">
+                            <span>Select from Predefined</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="path-input-row">
+                    <div id="pathCustomInput" class="form-group path-input-group">
+                        <input type="text" id="pathCustomTopic" class="modern-input" placeholder="Enter any topic...">
+                    </div>
+                    <div id="pathPredefinedSelect" class="form-group path-input-group hidden">
+                        <select id="pathTopicSelect" class="modern-select">
+                            <option value="">-- Select Topic --</option>
+                            <option value="1">Python Basics</option>
+                            <option value="2">Machine Learning</option>
+                            <option value="3">Data Structures</option>
+                            <option value="4">Algorithms</option>
+                            <option value="5">Neural Networks</option>
+                            <option value="6">Natural Language Processing</option>
+                        </select>
+                    </div>
+                    <button class="action-button primary path-generate-btn" onclick="generateStudyPath()">
+                        <span>Generate Study Path</span>
+                    </button>
+                </div>
+            </div>
+            <div id="studyPathContent" class="study-path-content hidden">
+                <div class="path-timeline">
+                    <div id="pathSteps" class="path-steps"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube RAG Section -->
+    <section id="youtube-rag" class="section">
+        <div class="youtube-rag-container">
+            <div class="section-hero-image youtube-play-hero">
+                <div class="section-image-overlay">
+                    <h3>YouTube Video Q&A</h3>
+                    <p>Ask questions about any YouTube video using AI-powered RAG</p>
+                </div>
+            </div>
+            
+            <div class="youtube-rag-card">
+                <div class="youtube-rag-header">
+                    <h2>📺 YouTube Video Chatbot</h2>
+                    <p>Paste a YouTube video link, and ask questions about its content</p>
+                </div>
+
+                <!-- Video Processing Section -->
+                <div class="youtube-process-section">
+                    <div class="form-group">
+                        <label for="youtubeVideoUrl">YouTube Video URL or Video ID</label>
+                        <div class="input-with-button">
+                            <input type="text" id="youtubeVideoUrl" class="modern-input" 
+                                   placeholder="https://www.youtube.com/watch?v=... or paste video ID">
+                            <button class="action-button primary" onclick="processYouTubeVideo()" id="processVideoBtn">
+                                <span>Process Video</span>
+                            </button>
+                        </div>
+                        <small class="form-hint">The video will be processed to extract its transcript and prepare for Q&A</small>
+                    </div>
+                    <div id="videoProcessingStatus" class="status-message hidden"></div>
+                    <div id="videoInfo" class="video-info hidden">
+                        <div class="info-badge">
+                            <span class="info-icon">✅</span>
+                            <span>Video processed successfully! You can now ask questions.</span>
+                        </div>
+                        <div class="video-details">
+                            <p><strong>Video ID:</strong> <span id="currentVideoId"></span></p>
+                            <p><strong>Status:</strong> <span class="status-ready">Ready for questions</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q&A Section -->
+                <div class="youtube-qa-section hidden" id="qaSection">
+                    <h3>Ask Questions About the Video</h3>
+                    <div class="qa-container">
+                        <div class="question-input-container">
+                            <div class="form-group">
+                                <label for="youtubeQuestion">Your Question</label>
+                                <textarea id="youtubeQuestion" class="modern-textarea" rows="3" 
+                                          placeholder="Ask any question about the video content..."></textarea>
+                            </div>
+                            <button class="action-button primary" onclick="askYouTubeQuestion()" id="askQuestionBtn">
+                                <span>Ask Question</span>
+                            </button>
+                        </div>
+                        
+                        <div id="youtubeAnswers" class="answers-container">
+                            <!-- Answers will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Section -->
+    <section id="auth" class="section">
+        <div class="auth-container">
+            <div class="section-hero-image auth-hero-image">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&h=300&fit=crop" alt="Authentication" class="section-banner-image">
+                <div class="section-image-overlay">
+                    <h3>Welcome Back</h3>
+                    <p>Sign in to continue your learning journey</p>
+                </div>
+            </div>
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2 id="authTitle">Sign In</h2>
+                    <p id="authSubtitle">Welcome back! Please sign in to your account.</p>
+                </div>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthMode('signin')">Sign In</button>
+                    <button class="auth-tab" onclick="switchAuthMode('signup')">Sign Up</button>
+                </div>
+                <form id="authForm" class="auth-form" onsubmit="handleAuth(event)">
+                    <div class="form-group">
+                        <label for="authEmail">Email Address</label>
+                        <input type="email" id="authEmail" class="modern-input" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="authPassword">Password</label>
+                        <input type="password" id="authPassword" class="modern-input" placeholder="Enter your password" required>
+                    </div>
+                    <div id="signupFields" class="signup-fields hidden">
+                        <div class="form-group">
+                            <label for="authName">Full Name</label>
+                            <input type="text" id="authName" class="modern-input" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="authConfirmPassword">Confirm Password</label>
+                            <input type="password" id="authConfirmPassword" class="modern-input" placeholder="Confirm your password">
+                        </div>
+                    </div>
+                    <button type="submit" class="action-button primary auth-submit">
+                        <span id="authSubmitText">Sign In</span>
+                    </button>
+                </form>
+                <div class="auth-footer">
+                    <p id="authFooterText">Don't have an account? <a href="#" onclick="switchAuthMode('signup'); return false;">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="section">
+        <div class="feedback-container">
+            <div class="section-hero-image">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=400&fit=crop" alt="Feedback" class="section-banner-image">
+                <div class="section-image-overlay">
+                    <h3>Feedback & Suggestions</h3>
+                    <p>Help us improve by sharing your thoughts</p>
+                </div>
+            </div>
+            <div class="feedback-card">
+                <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
+                    <div class="form-group">
+                        <label for="feedbackName">Your Name</label>
+                        <input type="text" id="feedbackName" class="modern-input" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackEmail">Email Address</label>
+                        <input type="email" id="feedbackEmail" class="modern-input" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackType">Feedback Type</label>
+                        <select id="feedbackType" class="modern-select" required>
+                            <option value="">-- Select Type --</option>
+                            <option value="bug">Bug Report</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="improvement">Improvement Suggestion</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackSubject">Subject</label>
+                        <input type="text" id="feedbackSubject" class="modern-input" placeholder="Brief description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackMessage">Your Feedback</label>
+                        <textarea id="feedbackMessage" class="modern-textarea" rows="6" placeholder="Please share your detailed feedback, suggestions, or report any issues..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackRating">Rating</label>
+                        <div class="rating-input">
+                            <input type="radio" id="rating5" name="rating" value="5">
+                            <label for="rating5">⭐</label>
+                            <input type="radio" id="rating4" name="rating" value="4">
+                            <label for="rating4">⭐</label>
+                            <input type="radio" id="rating3" name="rating" value="3">
+                            <label for="rating3">⭐</label>
+                            <input type="radio" id="rating2" name="rating" value="2">
+                            <label for="rating2">⭐</label>
+                            <input type="radio" id="rating1" name="rating" value="1">
+                            <label for="rating1">⭐</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="action-button primary">
+                        <span>Submit Feedback</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 AI Teacher Agent. All rights reserved.</p>
+            <p>Semester Project - AI Agent Design & Implementation</p>
+        </div>
+    </footer>
+
+    <!-- jsPDF library for PDF generation (from unpkg CDN - more reliable) -->
+    <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <!-- html2pdf.js library for PDF generation (includes html2canvas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
